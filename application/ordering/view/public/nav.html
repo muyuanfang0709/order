@@ -1,0 +1,56 @@
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            {$type=isset($_SESSION["role"])?$_SESSION["role"]:0;}
+            {eq name='type' value='1'}
+            <li class="layui-nav-item">
+                <a href="javascript:;">角色管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../System/addUser" target="one">添加角色</a></dd>
+                    <dd><a href="../System/userList" target="one">编辑角色</a></dd>
+                </dl>
+            </li>
+            {/eq}
+
+            {if $type==1 or $type==2 }
+            <li class="layui-nav-item">
+                <a href="javascript:;">菜品</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../Dishes/menuList" target="one">菜品列表</a></dd>
+                    <dd><a href="../Dishes/dishesNextWeek" target="one">下星期菜表</a></dd>
+                    <dd><a href="../Dishes/addNewDishes" target="one">添加新菜</a></dd>
+                </dl>
+            </li>
+            {/if}
+            {if $type==1 or $type==3 }
+            <li class="layui-nav-item">
+                <a href="javascript:;">点餐维护</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../Maintain/userAlerts" target="one">用户提醒</a></dd>
+                    <dd><a href="../Maintain/departStatistics" target="one" >部门统计</a></dd>
+                    <dd><a href="../Maintain/PersonnelHistory" target="one">人员历史点餐总记录</a></dd>
+                </dl>
+            </li>
+            {/if}
+            <li class="layui-nav-item">
+                <a href="javascript:;">点餐管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../Management/userOrder" target="one">用户点餐</a></dd>
+                    <dd><a href="../Management/viewOrder" target="one">查看点餐</a></dd>
+                    <!--                        帮忙点餐，或许修改某人的点餐信息-->
+                    {if $type==1 or $type==3}
+                    <dd><a href="../Management/editOrder" target="one">添加/修改点餐</a></dd>
+                    <dd><a href="../Management/assistOrder" target="one">协助多人点餐</a></dd>
+                    {/if}
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">信息修改</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../Information/pwdModify" target="one">密码修改</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>

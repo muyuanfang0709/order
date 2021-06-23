@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>菜品列表</legend>
+</fieldset>
+<div class="layui-form">
+    <form method="post">
+        <table class="layui-table">
+            <colgroup>
+                <col width="500">
+                <col width="500">
+                <col width="500">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>菜品名</th>
+                <th>操作</th>
+                <!--                <th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <h {$add=0}></h>
+            {foreach $data as $key=>$value}
+            {if $value.food_id!=(-1)}
+            <tr>
+                <td>{$p*7-6+$add}</td>
+                <td>{$value.name}</td>
+                <h {$add=$add+1}></h>
+                <td>
+                    <a onclick='deletefood("{$value.food_id}")' type="button" value="删除" class="layui-btn layui-btn-primary layui-border-red">删除</a>
+                </td>
+            </tr>
+            {/if}
+            {/foreach}
+            </tbody>
+        </table>
+        <div align="center" >{$page|raw}</div>
+    </form>
+</div>
+<script>
+    function deletefood(a) {
+        layer.confirm('是否删除该菜品？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                type:'GET',
+                url:"{:url('Dishes/deletefood')}",
+                data:{
+                    food_id:a
+                },
+                success:function (res) {
+                    console.log(res);
+                    if (res.data == 1){
+                        layer.msg('删除成功！', {icon: 1,time:1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Dishes/menuList')}"
+                        },1000)
+                    }
+                    if (res.data == 0){
+                        layer.msg('删除失败！', {icon: 2,time:1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Dishes/menuList')}"
+                        },1000)
+                    }
+                }
+            })
+        }, function(){
+            layer.msg('取消成功！', {icon: 1,time:1000});
+        });
+    }
+</script>
+</body>
+</html>
+
+
+
+

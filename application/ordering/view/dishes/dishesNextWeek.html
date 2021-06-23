@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <script src="__PUBLIC__layui/layui.js"></script>
+
+    <title>点餐系统后台</title>
+    <style type="text/css">
+        .select_box input {
+            cursor: pointer;
+            display: block;
+            line-height: 38px;
+            width: 100%;
+            height: 38px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            padding-right: 20px;
+            padding-left: 10px;
+        }
+
+        .select_box ul {
+            width: 360px;
+            position: absolute;
+            top: 40px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            display: none;
+            background: white;
+            z-index: 99999;
+        }
+
+        .select_box ul li {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            font-size: 8px;
+            text-align: center;
+            padding-left: 5px;
+            width: 80px;
+            cursor: pointer;
+        }
+
+        .hover {
+            background: #009688;
+            color: white;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>请选择下周菜单</legend>
+</fieldset>
+<div>
+<button onclick="addOrder()" value="" class="layui-btn btn1">添加新的一周表单</button>
+<p style="display: inline-block;font-size: 20px;margin-left: 50px;">当前单号为：{$max}</p>
+</div>
+<form id="form" class="layui-form layui-form-pane" method="post" action="dishesNextWeek">
+    <table class="layui-table" id="testTable">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>菜一</th>
+            <th>菜二</th>
+            <th>菜三</th>
+            <th width="200px;">操作</th>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        {foreach $orderinfo as $key=>$o}
+        <tr>
+            <td>{$o.day}</td>
+            <td>{$foodday[$key*3+1]}</td>
+            <td>{$foodday[$key*3+2]}</td>
+            <td>{$foodday[$key*3+3]}</td>
+            <td>
+                <input value="删除" type="button" onclick='deleteFood("{$o.day}")' class="layui-btn layui-btn-primary layui-border-red">
+            </td>
+        </tr>
+        {/foreach}
+        <tr>
+            <td>
+                <div class="layui-input-inline">
+                    <input id="time" name="time" class="layui-input time" type="text" placeholder="请选择日期"  autocomplete="off" readonly>
+                </div>
+            </td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="select_box">
+                        <ul class="select_ul">
+                            {foreach $food as $i}
+                            {if $i.food_id!=(-1)}
+                            <li value="{$i.name}">{$i.name}</li>
+                            {/if}
+                            {/foreach}
+                        </ul>
+                        <input class="layui-input myselect" id="food1" name="food_name1" value="" type="text" autocomplete="off"
+                               placeholder="请选择..." required/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="select_box">
+                        <ul class="select_ul">
+                            {foreach $food as $i}
+                            {if $i.food_id!=(-1)}
+                            <li value="{$i.name}">{$i.name}</li>
+                            {/if}
+                            {/foreach}
+                        </ul>
+                        <input id="food2" name="food_name2" value="" class="layui-input myselect" type="text" autocomplete="off"
+                               placeholder="请选择..." required/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="select_box">
+                        <ul class="select_ul">
+                            {foreach $food as $i}
+                            {if $i.food_id!=(-1)}
+                            <li value="{$i.name}">{$i.name}</li>
+                            {/if}
+                            {/foreach}
+                        </ul>
+                        <input id="food3" name="food_name3" value="" class="layui-input myselect" type="text" autocomplete="off"
+                               placeholder="请选择..." required/>
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="layui-btn-group">
+                    <button type="submit" class="layui-btn btn1" id="cx" onclick="submit">提交</button>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</form>
+
+<script src="__PUBLIC__layui/layui.js"></script>
+<script>
+    layui.use(['form', 'layer', 'laydate', 'element', 'jquery'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            element = layui.element,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+
+        //时间选择器
+        function timeAdd() {
+            lay('.time').each(function () {
+                laydate.render({
+                    elem: this,
+                    trigger: 'click',
+                });
+            });
+        }
+
+        //初始化时先调用一次，确保静态的那一行可点
+        timeAdd();
+
+    });
+
+
+    //input点击事件
+    $(document).on('click', '.select_box input', function () {
+        var thisinput = $(this);
+        var thisul = $(this).parent().find("ul");
+        if (thisul.css("display") === "none") {
+            if (thisul.height() > 200) {
+                thisul.css({height: "200" + "px", "overflow-y": "scroll"})
+            }
+            thisul.fadeIn("100");
+            thisul.hover(function () {
+            }, function () {
+                thisul.fadeOut("100");
+            });
+            thisul.find("li").click(function () {
+                thisinput.val($(this).text());
+                thisul.fadeOut("100");
+            }).hover(function () {
+                $(this).addClass("hover");
+            }, function () {
+                $(this).removeClass("hover");
+            });
+        } else {
+            thisul.fadeOut("fast");
+        }
+
+    });
+
+    //重复检测
+    $(document).on('click', '#cx',function()
+    {
+        var $input = $(".myselect");
+        var all = $input.map(function() { return $(this).val(); }).toArray().sort();
+        for (var i = 1; i < all.length; i++) {
+            if (all[i] === all[i - 1] && all[i] !== "") {
+                layer.msg("有重复菜品");
+                return false;
+            }
+        }
+        var jsonStr='<?php echo json_encode($orderinfo) ?>';
+        let arr = $.parseJSON(jsonStr);//json字符串转化成json对象(jq方法)
+        var day=time.value;
+        if(day==""||day==null){
+            layer.msg("请输入日期");
+            return false;
+        }
+        for (var o = 0; o < arr.length; o++) {
+            if(arr[o].day===day){
+                layer.msg("日期不能重复");
+                return false;
+            }
+        }
+    });
+</script>
+<script>
+    function deleteFood(a) {
+        layer.confirm('是否删除该行菜品？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                type:'GET',
+                url:"deleteorderinfo",
+                data:{
+                    time:a
+                },
+                success:function (res) {
+                    console.log(res);
+                    if (res.data == 1){
+                        layer.msg('删除成功！', {icon: 1,time:1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Dishes/dishesnextweek')}"
+                        },1000)
+                    }
+                    if (res.data == 0){
+                        layer.msg('删除失败！', {icon: 2,time:1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Dishes/dishesnextweek')}"
+                        },1000)
+                    }
+                }
+            })
+        }, function(){
+            layer.msg('取消成功！', {icon: 1,time:1000});
+        });
+    }
+</script>
+<script>
+    function addOrder() {
+        layer.confirm('是否添加新的一周表单？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('Dishes/addOrder')}",
+                data: {},
+                success: function (res) {
+                    if (res.data == 1) {
+                        layer.msg('添加成功！', {icon: 1, time: 1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Dishes/dishesNextWeek')}"
+                        }, 1000)
+                    }
+                }
+            })
+        }, function () {
+            layer.msg('取消成功！', {icon: 1, time: 1000});
+        });
+    }
+
+</script>
+</body>
+</html>
+
+

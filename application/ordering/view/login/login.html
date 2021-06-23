@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>太湖能谷订餐系统登录页面</title>
+    <link rel="stylesheet" href="__PUBLIC__css/login.css">
+</head>
+<body>
+<div id="background">
+    <div class="bg-photo bg-photo-1">
+        <h2>太湖能谷订餐系统</h2>
+        <form name="RegForm" method="post" action=""  >
+            <div class="login">
+                <span class="s1"></span>
+                <p>登录</p>
+                <div class="d1">
+                    <span class="s2"><img src="__PUBLIC__images/用户.png" alt=""></span>
+                    <input id="user_name" type="text"  name="user" value="" placeholder="请输入用户姓名" >
+                </div>
+                <div class="d2">
+                    <span class="s2"><img src="__PUBLIC__images/密码.png" alt=""></span>
+                    <input id="password" type="password" name="password" value="" placeholder="请输入登录密码" >
+                </div>
+                <input type="button" name="Submit" value="登录" class="button" onclick="doLogin();" >
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="__PUBLIC__js/jquery-3.6.0.js"></script>
+<script src="__PUBLIC__layer-v3.4.0/layer/layer.js"></script>
+
+<script>
+    function doLogin(){
+        $.ajax({
+            type: 'POST',
+            url: "{:url('Login/login')}",
+            data:{user: $('#user_name').val(), password: $('#password').val()},
+            success:function (res){
+                if(res.data == 0){
+                    layer.msg('登陆成功！', {icon: 1,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Iframe/Iframe')}"
+                    },1000)
+                }
+                if (res.data == 1){
+                    layer.msg('该账号被禁用！', {icon: 7,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Login/login')}"
+                    },1000)
+                }
+                if (res.data == 2){
+                    layer.msg('账号密码错误！', {icon: 5,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Login/login')}"
+                    },1000)
+                }
+                if (res.data == -1){
+                    layer.msg('该用户名不存在！', {icon: 2,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Login/login')}"
+                    },1000)
+                }
+            }
+        });
+    }
+</script>
+</html>

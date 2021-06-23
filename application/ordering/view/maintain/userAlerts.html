@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>未点餐用户提醒</legend>
+</fieldset>
+<div class="layui-form">
+    <form method="post">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th lay-data="{field:'username', title:'用户名'}">姓名</th>
+                <th lay-data="{field:'dep', title:'部门',sort:true}">部门</th>
+                <th lay-data="{field:'Mon', title:'电话号码', edit: 'text'}">电话号码</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $basename as $key=>$us}
+            <tr>
+                <td>{$us}</td>
+                <td>{$department[$key]}</td>
+                <td>{$number[$key]}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>
+
+

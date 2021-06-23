@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <link rel="stylesheet" href="__PUBLIC__css/index.css">
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<br>
+<div class="body">
+    <h2 align="center" lay-size="12px">请选择你要吃的菜</h2>
+    <div class="content">
+        <form id="formLogin" name="formLogin" action="userOrder" method="post">
+
+            <h {$a=0}></h>
+            {foreach $orderinfo as $key=>$o}
+                {if $o.order_id==$max}
+            <br>
+                {$o.day}({$time[$a]})
+<!--            多个菜品则改为循环  先固定三个-->
+                    <label><input id="1" name="{$a}" type="radio" value="{$foodday[$a*3+1]}"/><span>{$foodday[$a*3+1]}</span></label>
+                    <label><input id="2" name="{$a}" type="radio" value="{$foodday[$a*3+2]}"/><span>{$foodday[$a*3+2]}</span></label>
+                    <label><input id="3" name="{$a}" type="radio" value="{$foodday[$a*3+3]}"/><span>{$foodday[$a*3+3]}</span></label>
+                    <label><input id="-1" name="{$a}" type="radio" value="出差/请假"/><span>出差/请假</span></label>
+            <h {$a=$a+1}></h>
+            {/if}
+            {/foreach}
+            <br>
+            <input class="button" type="submit" name="submit" value="确认"  />
+        </form>
+    </div>
+</div>
+</body>
+</html>

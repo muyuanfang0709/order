@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <script src="__PUBLIC__layui/layui.js"></script>
+    <title>点餐系统后台</title>
+    <style type="text/css">
+        .select_box input {
+            cursor: pointer;
+            display: block;
+            line-height: 38px;
+            width: 100%;
+            height: 38px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            padding-right: 20px;
+            padding-left: 10px;
+        }
+
+        .select_box ul {
+            width: 360px;
+            position: absolute;
+            top: 40px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            display: none;
+            background: white;
+            z-index: 99999;
+        }
+
+        .select_box ul li {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            font-size: 8px;
+            text-align: center;
+            padding-left: 5px;
+            width: 80px;
+            cursor: pointer;
+        }
+
+        .hover {
+            background: #009688;
+            color: white;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>协助多人点餐</legend>
+</fieldset>
+
+<form id="form" class="layui-form layui-form-pane" method="post">
+    <table class="layui-table" id="testTable">
+        <colgroup>
+            <col width="100">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+            <col width="200">
+        </colgroup>
+        <thead>
+
+        <tr>
+            <th>用户名</th>
+
+            <h {$a=0}></h>
+
+            {foreach $orderinfo as $key=>$o}
+            <td align="center">{$o.day}({$time[$a]})</td>
+            <h {$a=$a+1}></h>
+            {/foreach}
+
+
+            <th >操作</th>
+        </tr>
+
+        </thead>
+        <tbody class="tbody">
+
+
+
+        {foreach $noordering as $key=>$value}
+        <h $true=1></h>
+        <h {$a=0}></h>
+        <tr>
+            <form  action="assistOrder">
+            <td style="text-align: center">{$value.user}</td>
+            {foreach $orderinfo as $key1=>$o}
+            <td>
+                <div class="layui-form-item" >
+                    <input type="hidden" name="uid" value="{$value.uid}" >
+                    <div class="layui-input-inline" style="width: 150px">
+                        <select name={$key1+$key*2} >
+                            <option value="">请选择菜</option>
+                            <option value="{$foodday[$a*3+1]}">{$foodday[$a*3+1]}</option>
+                            <option value="{$foodday[$a*3+2]}">{$foodday[$a*3+2]}</option>
+                            <option value="{$foodday[$a*3+3]}">{$foodday[$a*3+3]}</option>
+                            <option selected value="出差/请假" >出差/请假</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+            <h {$a=$a+1}></h>
+            {/foreach}
+            <td>
+                <input value="提交" type="submit" class="layui-btn layui-btn-primary layui-border-blue" >
+            </td>
+            </form>
+        </tr>
+
+
+        {/foreach}
+        </tbody>
+    </table>
+</form>
+{include file="Public:footer"/}
+<script src="__PUBLIC__layui/layui.js"></script>
+<!--<script>-->
+<!--    function assistOrder() {-->
+<!--        layer.confirm('是否删除该菜品？', {-->
+<!--            btn: ['确定','取消'] //按钮-->
+<!--        }, function(){-->
+<!--            $.ajax({-->
+<!--                type:'POST',-->
+<!--                url:"{:url('Management/assistOrder')}",-->
+<!--                data:{-->
+<!--                },-->
+<!--                success:function () {-->
+<!--                    console.log(res);-->
+<!--                    if (res.data == 1){-->
+<!--                        layer.msg('删除成功！', {icon: 1,time:1000});-->
+<!--                        setTimeout(function () {-->
+<!--                            window.location = "{:url('Dishes/menuList')}"-->
+<!--                        },1000)-->
+<!--                    }-->
+<!--                    if (res.data == 0){-->
+<!--                        layer.msg('删除失败！', {icon: 2,time:1000});-->
+<!--                        setTimeout(function () {-->
+<!--                            window.location = "{:url('Dishes/menuList')}"-->
+<!--                        },1000)-->
+<!--                    }-->
+<!--                }-->
+<!--            })-->
+<!--        }, function(){-->
+<!--            layer.msg('取消成功！', {icon: 1,time:1000});-->
+<!--        });-->
+<!--    }-->
+
+<!--    function assistOrder() {-->
+<!--        $.ajax({-->
+<!--            type:'POST',-->
+<!--            url:'Management/assistOrder',-->
+<!--            data:{},-->
+<!--            success:function(){-->
+
+<!--            }-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>
+
+

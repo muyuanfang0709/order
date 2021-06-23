@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>点餐系统后台</title>
+    {include file="Public:header"/}
+    <style>
+        a{
+            text-decoration: none!important;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden;overflow-y: hidden">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo" style="position:absolute;left:0;top:0;width:200px;height:100%;line-height:60px;text-align:center;color:#ffffff;font-size:16px">太湖能谷点餐系统</div>
+        {if(isset($_SESSION['user']))}
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="">
+                    <img src="__PUBLIC__images/阳炎-1.jpeg" class="layui-nav-img">
+                    {$_SESSION["user"]}
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <button style="background-color:black" class="layui-btn btn1" onclick="logout1()">退出登录</button>
+            </li>
+s
+        </ul>
+        {else/}
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="Login/login">登录</a>
+            </li>
+        </ul>
+        {/if}
+    </div>
+    {include file="Public:nav"/}
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe src="../Management/userOrder" width="100%" height="107%" name="one">
+            <!-- 内容主体区域 -->
+        </iframe>
+        <!--    </div>-->
+    </div>
+</div>
+<!--</div>-->
+{include file="Public:footer"/}
+<script src="__PUBLIC__layer-v3.4.0/layer/layer.js"></script>
+<script>
+    function logout1() {
+        layer.confirm('是否退出登录？', {
+            btn: ['确定','取消'] //按钮
+        }, function() {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('Login/logout')}",
+                data: {},
+                success: function (res) {
+                    if (res.data == -1) {
+                        // alert('123')
+                        // window.location = "{:url('Dishes/addNewDishes')}"
+                        layer.msg('退出成功！', {icon: 1, time: 1000});
+                        setTimeout(function () {
+                            window.location = "{:url('Login/login')}"
+                        }, 1000)
+                    }
+                }
+            })
+        }, function () {
+            layer.msg('取消成功！', {icon: 1, time: 1000});
+        });
+        }
+
+</script>
+</body>
+</html>
+
+
+

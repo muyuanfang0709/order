@@ -1,0 +1,113 @@
+/*全局样式*/
+*{
+    margin: 0;
+    padding: 0 ;
+    list-style: none;
+    text-decoration: none;
+}
+/*背景图片*/
+/*body{*/
+/*    background: url("../images/1.png") no-repeat;*/
+/*    background-size: 100% 100% ;*/
+/*}*/
+.body{
+    background: url("../images/1.png") no-repeat;
+    background-size: 100% 100% ;
+
+}
+/*导航栏*/
+.nav{
+    margin: 0 auto;
+    height: 21px;
+    background-image: url('../images/nav.png') ;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+/*导航栏链接跳转*/
+.left li{
+    float: left;
+    padding-right: 20px;
+}
+.right li{
+    float: right;
+    padding-left: 20px;
+}
+/*banner图片*/
+.banner{
+   background-color: rgba(211, 211, 211, 0.07);
+}
+/*段落字体样式*/
+.p1{
+    text-align: center;
+    padding: 5px;
+}
+/*版型居中*/
+.content{
+    text-align: center;
+    min-width: 800px;
+}
+/*设置点击选择样式*/
+label{
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #7fffd4;
+    text-align: center;
+    display: inline-block;
+    width: 160px;
+    height: 40px;
+    margin: 5px 2px;
+}
+label:hover{
+    transform: scale(1.2,1.2);
+}
+input{ display:none;}
+span{
+    display: flex;
+    width: 160px;
+    height: 40px;
+    text-align: center;
+   align-items: center;
+    justify-content: center;
+}
+input:checked + span {
+    background-color: #f00;
+}
+.button{
+    margin-top: 20px;
+    margin-bottom: 45px;
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+    color: white;
+    background-color: red;
+    border-radius: 10px ;
+    border-color:  red;
+    outline: none;
+}
+/*表格样式*/
+.table1{
+    margin:100px auto;
+}
+.table1 td:nth-child(1){
+    background-color: chocolate;
+    color: white;
+}
+.table1 td{
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+.footer{
+margin-top: -50px;
+    font-size: 20px;
+    color: #16e2a2;
+}
+.footer a{
+    color: #16e2a2;
+
+}
+.footer a:hover{
+    color: chocolate;
+
+}

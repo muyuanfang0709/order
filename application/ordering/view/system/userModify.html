@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>点餐系统后台</title>
+    {include file="Public:header"/}
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改员工信息</legend>
+</fieldset>
+<form  class="layui-form layui-form-pane" method="post" action="">
+    <input type="hidden" id="id" name="id" value="{$data.uid}" >
+    <div class="layui-form-item">
+        <label class="layui-form-label" id="user">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" value="{$data.user}" name="user" id="username" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+            <span id="nameError1" style="color: red;" class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" value="{$data.password}" name="password" id="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <span id="nameError3" style="color: red;" class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" value="{$data.name}" name="name" id="nameuser" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <span id="nameError2" style="color: red;" class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-block">
+            <input type="text" value="{$data.number}" name="number" id="number" lay-verify="required" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+            <span id="nameError4" style="color: red;" class="error"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理权限</label>
+        <div class="layui-input-block">
+            <select name="role_id" id="role">
+                <option value="">请选择</option>
+                {foreach $role as $adm}
+                <option value="{$adm.role_id}" selected="">{$adm.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block">
+            <select name="dep_id" id="dep">
+                <option value="">请选择</option>
+                {foreach $dep as $part}
+                <option value="{$part.dep_id}" selected="">{$part.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center;">
+        <input type="button"  value="提交"  onclick="userMod()" class="layui-btn" >
+    </div>
+</form>
+</body>
+<script src="__PUBLIC__layui/layui.js" charset="utf-8"></script>
+{include file="Public:footer"/}
+
+<script src="__PUBLIC__js/jquery.js"></script>
+<script>
+    //判断是否可以提交
+
+    var ok1=1,ok2=1,ok3=1;
+    $("#username").blur(function(){
+        var name = $("#username").val();
+        ok1=1;
+        $("#nameError1").html("");
+        $.ajax({
+            type:"POST",
+            url : "UserJudge?name="+name,
+            data:{user: $('#username').val()},
+            dataType : "json",
+            success : function(data) {
+                if (data.data==1) {
+                    $("#nameError1").html("用户名已存在");
+                    ok1=2;
+                }
+            }
+        });
+    });
+
+    $("#nameuser").blur(function(){
+        var name = $("#nameuser").val();
+        ok2=1;
+        $("#nameError2").html("");
+        $.ajax({
+            type:"POST",
+            url : "NameJudge?name="+name,
+            data:{user: $('#nameuser').val()},
+            dataType : "json",
+            success : function(data) {
+                if (data.data==1) {
+                    $("#nameError2").html("姓名含有数字");
+                    ok2=2;
+                }
+            }
+        });
+    });
+
+
+    $("#password").blur(function(){
+        var name = $("#password").val();
+        ok3=1;
+        $("#nameError3").html("");
+        $.ajax({
+            type:"POST",
+            url : "PasswordJudge?name="+name,
+            data:{user: $('#password').val()},
+            dataType : "json",
+            success : function(data) {
+                if (data.data==1) {
+                    $("#nameError3").html("密码要2-10位字符，需由中文、数字、字母（区分大小写）或下划线");
+                    ok3=2;
+                }
+            }
+        });
+    });
+
+    $("#number").blur(function(){
+        var name = $("#number").val();
+        if (name == null || name == "") {
+            $("#nameError4").html("请输入电话号码");
+        }
+    });
+
+    window.onload=function (){
+        var submit=document.getElementById("submit");
+        submit.onclick=function (event){
+            if(ok1==2){alert('用户名存在');return false;}
+            else if(ok2==2){alert('姓名含有数字');return false;}
+            else if(ok3==2){alert('密码要2-10位字符，需由中文、数字、字母（区分大小写）或下划线');return false;}
+        }
+    }
+
+
+    function userMod() {
+        $.ajax({
+            type:'POST',
+            url:"EditorUser",
+            data:{
+                id:$('#id').val(),
+                user:$('#username').val(),
+                name:$('#nameuser').val(),
+                password:$('#password').val(),
+                number:$('#number').val(),
+                role_id:$('#role').val(),
+                dep_id:$('#dep').val(),
+
+            },
+            success:function (res) {
+                console.log(res);
+                if (res.data == 1){
+                    layer.msg('提交成功！', {icon: 1,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('System/userList')}"
+                    },1000)
+                }
+                if (res.data == 0){
+                    layer.msg('提交失败！', {icon: 2,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('System/addUser')}"
+                    },1000)
+                }
+            }
+        })
+    }
+
+</script>
+</html>
+
+

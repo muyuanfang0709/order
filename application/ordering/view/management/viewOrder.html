@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<!--startprint-->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>用户点餐记录</legend>
+</fieldset>
+<div class="layui-form">
+    <form method="post">
+        <table class="layui-table">
+            <colgroup>
+            </colgroup>
+            <thead>
+            <tr>
+                <td align="center">用户</td>
+                <h {$a=0}></h>
+                {foreach $orderinfo as $key=>$o}
+                {if $o.order_id==$max}
+                <td align="center">{$o.day}({$time[$a]})</td>
+                <h {$a=$a+1}></h>
+                {/if}
+                {/foreach}
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $user as $key=>$u}
+            <tr>
+                <h {$x=0}></h>
+                {foreach $resule as $key=>$r}
+
+                {if $r.user_id==$u.uid}
+                {if $x==0}
+                <td align="center">{$u.name}</td>
+                <h {$x=1}></h>
+                {/if}
+                {foreach $food as $key=>$f}
+                {if $r.food_id==$f.food_id}
+                <td align="center">{$f.name}</td>
+                {/if}
+                {/foreach}
+                {/if}
+                {/foreach}
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div class="demo1" align="center" >{$page|raw}</div>
+    </form>
+</div>
+<!--endprint-->
+<div class="layui-form-item" >
+    <button style="position:absolute;top: 10px;right: 20px" type="button" onclick="doPrint()" class="layui-btn" lay-submit="" lay-filter="demo2">打印</button>
+</div>
+
+{include file="Public:footer"/}
+
+{include file="Public:print"/}
+</body>
+</html>

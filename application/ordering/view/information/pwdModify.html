@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改密码</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" method="post" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">原密码</label>
+        <div class="layui-input-block">
+            <input  id="oldpwd" type="text" name="oldpwd" lay-verify="required" placeholder="请输入原来的的密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div>
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-block">
+            <input id="newpwd" type="text" name="newpwd" lay-verify="required" placeholder="请输入新的密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+        <input type="button" onclick="pwdModifyOk()" value="提交" class="layui-btn" lay-submit="" lay-filter="demo2">
+    </div>
+</form>
+<script>
+    function pwdModifyOk() {
+        $.ajax({
+            type:'POST',
+            url:"{:url('Information/pwdModify')}",
+            data:{oldpwd:$('#oldpwd').val(),newpwd:$('#newpwd').val()},
+            success:function (res) {
+                if (res.data == 1){
+                    layer.msg('修改成功！', {icon: 1,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Information/pwdModify')}"
+                    },1000)
+                }
+                if (res.data == 0){
+                    layer.msg('修改失败，与原密码一致！', {icon:2,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Information/pwdModify')}"
+                    },1000);
+                }
+                if (res.data == 2){
+                    layer.msg('修改失败，原密码错误！', {icon: 5,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Information/pwdModify')}"
+                    },1000);
+                }
+                if (res.data == 3){
+                    layer.msg('请先登录！', {icon: 7,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Login/login')}"
+                    },1000);
+                }
+                if (res.data == 4){
+                    layer.msg('密码不能为空！', {icon: 5,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Information/pwdModify')}"
+                    },1000);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
+
+

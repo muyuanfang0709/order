@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>帮助点餐</legend>
+    <!--    最初，以后改为先输入用户名后，跳转该用户点餐信息列表，修改。可显示原主点餐信息，在此基础上修改。避免一次次输入。和判断是新增还是修改-->
+</fieldset>
+<form class="layui-form layui-form-pane" method="post" action="editOrder">
+    <div class="layui-form-item">
+        <label style="width: 180px;" class="layui-form-label" >用户名</label>
+        <div class="layui-input-block" style="margin-left: 180px;" >
+            <select  name="user" id="username" lay-search>
+                {foreach $user as $u}
+                {if $u.state==1}
+                <option value="{$u.user}" >{$u.user}</option>
+                {/if}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <h {$a=0}></h>
+        {foreach $orderinfo as $key=>$o}
+        <label style="width: 180px;" class="layui-form-label">{$o.day}({$time[$key]})</label>
+        <div class="layui-input-block"  style="margin-left: 180px;">
+            <select  name="{$key}" >
+                <option value="出差/请假">出差/请假</option>
+                <option value="{$foodday[$a*3+1]}" selected="">{$foodday[$a*3+1]}</option>
+                <option value="{$foodday[$a*3+2]}" selected="">{$foodday[$a*3+2]}</option>
+                <option value="{$foodday[$a*3+3]}" selected="">{$foodday[$a*3+3]}</option>
+            </select>
+            <br>
+        </div>
+        <h {$a=$a+1}></h>
+        {/foreach}
+
+
+    </div>
+
+    <div class="layui-form-item" style="text-align: center">
+        <button onclick="editOrder()" class="layui-btn" lay-submit="" lay-filter="demo2">提交</button>
+    </div>
+</form>
+{include file="Public:footer"/}
+</body>
+</html>
+
+
+

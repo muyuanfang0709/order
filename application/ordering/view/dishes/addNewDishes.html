@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="Public:header"/}
+    <title>点餐系统后台</title>
+</head>
+<body style="overflow-x: hidden">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>添加菜品</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" method="post" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">请输入新菜</label>
+        <div class="layui-input-block">
+            <input id="addfoods_id"  type="text" name="addfoods" lay-verify="required" placeholder="请输入新菜" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+        <input type="button" value="提交" onclick="addNewDishesOk()" class="layui-btn" lay-submit="" lay-filter="demo2">
+    </div>
+</form>
+<script>
+    function addNewDishesOk() {
+        $.ajax({
+            type:'POST',
+            url:"{:url('Dishes/addNewDishes')}",
+            data:{addfoods:$('#addfoods_id').val()},
+            success:function (res) {
+                if (res.data == 1){
+                    layer.msg('提交成功！', {icon: 1,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Dishes/addNewDishes')}"
+                    },1000)
+                }
+                if (res.data == 0){
+                    layer.msg('提交失败！此菜品已拥有！', {icon: 2,time:1000});
+                    setTimeout(function () {
+                        window.location = "{:url('Dishes/addNewDishes')}"
+                    },1000)
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
+

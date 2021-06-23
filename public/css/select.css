@@ -1,0 +1,251 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.hide {
+    display: none;
+}
+
+input {
+    outline: none;
+}
+
+
+
+/* 模拟下拉框 */
+.input_1  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_2  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_3  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_4  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_5  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_6  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_7  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_8  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_9  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_10  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_11  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_12  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_13  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_14  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_15  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_16  {
+    margin: 20px 0 0 200px;
+    display: inline-block;
+}
+.input_17  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+.input_18  {
+    margin: 20px 0 0 20px;
+    display: inline-block;
+}
+
+ul{
+    /*background: #9acfea;*/
+}
+
+.input1 {
+
+    width: 230px;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px 0 10px 10px;
+    border: 1px solid #d6d6d6;
+    cursor: pointer;
+    margin-left: -37px;
+    margin-right: 37px;
+}
+
+
+
+
+ .food1 {
+     float: left;
+     margin-left: 200px;
+     position: fixed;
+     top:220px;
+
+}
+.food2 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 220px;
+}
+.food3 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 220px;
+}
+.food4 {
+    float: left;
+    margin-left: 200px;
+    position: fixed;
+    top: 280px;
+
+}
+.food5 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 280px;
+}
+.food6 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 280px;
+}
+.food7 {
+    float: left;
+    margin-left: 200px;
+    position: fixed;
+    top: 340px;
+
+}
+.food8 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 340px;
+}
+.food9 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 340px;
+}
+.food10 {
+    float: left;
+    margin-left: 200px;
+    position: fixed;
+    top: 400px;
+
+}
+.food11 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 400px;
+}
+.food12 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 400px;
+}
+.food13 {
+    float: left;
+    margin-left: 200px;
+    position: fixed;
+    top: 460px;
+
+}
+.food14 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 460px;
+}
+.food15 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 460px;
+}
+.food16 {
+    float: left;
+    margin-left: 200px;
+    position: fixed;
+    top: 520px;
+
+}
+.food17 {
+    float: left;
+    margin-left: 453px;
+    position: fixed;
+    top: 520px;
+}
+.food18 {
+    float: left;
+    margin-left: 707px;
+    position: fixed;
+    top: 520px;
+}
+.food ul {
+    display: inline-block;
+    width: 230px;
+    height: 200px;
+    border:1px solid #d6d6d6 ;
+    border-top: none;
+    float: left;
+
+}
+
+.food ul li {
+    font-size: 8px;
+    width: 33%;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+    float: left;
+    text-align: center;
+
+}
+
+
+
+
+
+
+
